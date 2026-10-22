@@ -255,7 +255,7 @@ $('#docForm').addEventListener('submit',async e=>{e.preventDefault();const f=e.t
   x&&new Date(x+'T00:00:00')<TODAY?f.elements.expiry.setCustomValidity('Expiry must be today or later'):f.elements.expiry.setCustomValidity('');
   f.elements.file.setCustomValidity(!file&&editing===null?'Choose a file':file&&!/\.(pdf|jpe?g|png)$/i.test(file.name)?'Use a PDF, JPG or PNG file':'');
   if(!f.checkValidity()){f.reportValidity();return}
-  try{const patch={expiry:x,status:'Pending',reason:''};
+  try{const patch={expiry:x,status:'Pending',reason:''};if(file){const safe=file.name.replace(/[^a-zA-Z0-9._-]/g,'_'),path=uid+'/'+Date.now()+'-'+safe;const {error:uploadError}=await db.storage.from('portal-documents').upload(path,file,{upsert:false,contentType:file.type});if(uploadError)throw uploadError;patch.file_path=path}
     if(editing!==null){await upd('documents',editing,patch);toast('Saved. Pending review')}
     else{const name=f.elements.name.value,ex=(await list('documents')).find(d=>d.name===name);
       if(ex)await upd('documents',ex.id,patch);else await add('documents',{name,...patch});toast('Uploaded. Pending review')}

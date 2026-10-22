@@ -1,0 +1,304 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>SARAL · AYUSH Startup Portal</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap">
+<style>
+:root{--bg:#f4f6f1;--surface:#fff;--s2:#eef2ec;--fg:#16211b;--muted:#64726a;--line:#dfe5dc;--accent:#1f7a54;--a2:#d4912a;--afg:#fff;--warn:#a86400;--bad:#b3392a;--ok:#1f7a54;--shadow:0 8px 28px rgba(22,50,36,.08);--sans:"Plus Jakarta Sans",system-ui,-apple-system,"Segoe UI",sans-serif;color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0e1512;--surface:#16201b;--s2:#1c2822;--fg:#ecefe9;--muted:#93a39a;--line:#26342d;--accent:#58c391;--a2:#eab25a;--afg:#08140e;--warn:#eab25a;--bad:#f08a78;--ok:#58c391;--shadow:0 8px 28px rgba(0,0,0,.35);color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#0e1512;--surface:#16201b;--s2:#1c2822;--fg:#ecefe9;--muted:#93a39a;--line:#26342d;--accent:#58c391;--a2:#eab25a;--afg:#08140e;--warn:#eab25a;--bad:#f08a78;--ok:#58c391;--shadow:0 8px 28px rgba(0,0,0,.35);color-scheme:dark}
+*{box-sizing:border-box}html{scroll-padding-top:env(safe-area-inset-top,0px)}html,body{margin:0;min-height:100%}
+body{background:var(--bg);color:var(--fg);font:15px/1.55 var(--sans);transition:background .3s,color .3s}
+button,input,select{font:inherit;color:inherit}:focus-visible{outline:2px solid var(--a2);outline-offset:2px}[hidden]{display:none!important}
+h1{font-size:1.9rem;font-weight:800;letter-spacing:-.02em;margin:0}h2{font-size:1.05rem;font-weight:700;margin:0 0 14px}h3{font-size:1rem;font-weight:700;margin:0}p{margin:0}
+.muted{color:var(--muted)}.small{font-size:.84rem}.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+.app{display:grid;grid-template-columns:232px minmax(0,1fr);min-height:calc(100vh - 38px)}
+.side{position:sticky;top:38px;height:calc(100vh - 38px);background:var(--surface);border-right:1px solid var(--line);padding:22px 14px;display:flex;flex-direction:column;gap:4px;transition:background .3s}
+.brand{display:flex;align-items:center;gap:10px;font-weight:800;letter-spacing:.06em;margin:0 8px 22px}
+.logo{width:34px;height:34px;border-radius:10px;background:linear-gradient(135deg,var(--accent),var(--a2));display:grid;place-items:center;color:var(--afg)}
+.nav{display:flex;flex-direction:column;gap:2px}
+.nav button{display:flex;align-items:center;gap:10px;text-align:left;background:none;border:0;padding:9px 10px;border-radius:10px;cursor:pointer;color:var(--muted);font-weight:500;transition:.15s}
+.nav button:hover{background:var(--s2);color:var(--fg)}
+.nav button[aria-current=page]{background:var(--accent);color:var(--afg);font-weight:600}
+svg.i{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;flex:none}
+.sidefoot{margin-top:auto;display:flex;flex-direction:column;gap:10px}
+.dbbadge{font-size:.78rem;padding:8px 10px;border-radius:10px;background:var(--s2);color:var(--muted);display:flex;gap:8px;align-items:center}
+.dot{width:8px;height:8px;border-radius:50%;background:var(--a2)}.dbbadge.on .dot{background:var(--ok);box-shadow:0 0 0 4px color-mix(in srgb,var(--ok) 25%,transparent)}
+main{padding:26px 40px 28px;width:100%;min-width:0;flex:1;display:flex;flex-direction:column}.app>div{display:flex;flex-direction:column}
+section[data-screen]{display:flex;flex-direction:column;gap:20px;animation:rise .35s ease;flex:1}section[data-screen]>:last-child{flex:1}section[data-screen="guide"]>.card{display:flex;flex-direction:column}.cards{grid-auto-rows:1fr}
+@keyframes rise{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.hero{position:relative;overflow:hidden;border-radius:22px;padding:44px 36px;color:#fff;flex:2;display:flex;flex-direction:column;justify-content:center;align-items:flex-start;min-height:280px;text-shadow:0 1px 8px rgba(0,0,0,.25);background:linear-gradient(160deg,#ff9933 0%,#e8801a 30%,#0f5b3e 72%,#138808 100%);box-shadow:var(--shadow)}.hero>:not(.chakra){position:relative}.chakra{position:absolute;right:-50px;top:50%;width:300px;height:300px;margin-top:-150px;border-radius:50%;border:9px solid #223a8f;opacity:.4;background:repeating-conic-gradient(#223a8f 0 1.4deg,transparent 1.4deg 15deg);animation:spin 70s linear infinite}.chakra::after{content:"";position:absolute;inset:38%;border-radius:50%;background:#223a8f}@keyframes spin{to{transform:rotate(360deg)}}
+.hero p{max-width:480px;margin:10px 0 22px;opacity:.92}.hero h1{font-size:2.3rem;max-width:560px}
+.hero .btn.primary{background:#fff;color:#0f5b3e;border-color:#fff}.hero .btn{border-color:rgba(255,255,255,.5);background:transparent;color:#fff}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:20px;min-width:0;box-shadow:var(--shadow);transition:transform .2s,background .3s}
+.cards{display:grid;gap:16px;grid-template-columns:repeat(auto-fit,minmax(210px,1fr))}.cards>.card{display:flex;flex-direction:column;gap:6px;align-items:flex-start}
+.cards.lift>.card:hover{transform:translateY(-3px)}
+.big{font-size:1.9rem;font-weight:800;letter-spacing:-.02em;line-height:1.15}
+.row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}.cards .row{margin-top:auto}
+.btn{border:1px solid var(--line);background:var(--surface);padding:9px 16px;border-radius:10px;cursor:pointer;font-weight:600;transition:.15s}
+.btn:hover{border-color:var(--muted)}.btn.primary{background:var(--accent);color:var(--afg);border-color:var(--accent)}
+.btn.ghost{background:none;border-color:transparent;color:var(--muted)}.btn.ghost:hover{color:var(--fg)}.btn.danger{color:var(--bad)}.btn:disabled{opacity:.5;cursor:default}
+.btn.sm{padding:5px 12px;font-size:.84rem}
+.form{display:flex;flex-direction:column;gap:16px}.grid2{display:grid;gap:16px;grid-template-columns:repeat(auto-fit,minmax(220px,1fr))}
+label{display:flex;flex-direction:column;gap:6px;font-size:.84rem;color:var(--muted);font-weight:500}
+input,select{width:100%;background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:10px 12px;color:var(--fg)}
+input:user-invalid,select:user-invalid{border-color:var(--bad)}
+.tw{overflow-x:auto}table{width:100%;border-collapse:collapse}th,td{text-align:left;padding:12px 8px;border-bottom:1px solid var(--line)}
+th{font-size:.78rem;color:var(--muted);font-weight:600;text-transform:uppercase;letter-spacing:.04em}tbody tr:last-child td{border-bottom:0}
+td.act,th.act{text-align:right;white-space:nowrap}.slots th[scope=row]{color:var(--fg);text-transform:none;font-size:.9rem;letter-spacing:0}
+.list{list-style:none;margin:0;padding:0}.list li{display:flex;gap:12px;align-items:center;padding:12px 0;border-bottom:1px solid var(--line)}.list li:last-child{border:0}.list .meta{flex:1}
+.pill{display:inline-block;font-size:.74rem;font-weight:600;padding:3px 10px;border-radius:99px;background:var(--s2);color:var(--muted);white-space:nowrap}
+.pill.ok{color:var(--ok)}.pill.warn{color:var(--warn)}.pill.bad{color:var(--bad)}.err{color:var(--bad)}
+.dash{display:grid;gap:16px;grid-template-columns:1.2fr 1fr}
+.ring{--p:0;width:130px;height:130px;border-radius:50%;background:conic-gradient(var(--accent) calc(var(--p)*1%),var(--s2) 0);display:grid;place-items:center;transition:.6s}
+.ring b{width:96px;height:96px;border-radius:50%;background:var(--surface);display:grid;place-items:center;font-size:1.5rem;font-weight:800}
+.chat{display:flex;flex-direction:column;gap:10px;min-height:260px;flex:1;overflow-y:auto;margin-bottom:14px}
+.msg{margin:0;padding:10px 14px;border-radius:14px;max-width:82%;background:var(--s2);white-space:pre-wrap}.msg.me{background:var(--accent);color:var(--afg);align-self:flex-end}
+.chips{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+.empty{text-align:center;padding:24px;color:var(--muted)}
+.toast{position:fixed;bottom:calc(20px + env(safe-area-inset-bottom,0px));left:50%;transform:translateX(-50%) translateY(10px);background:var(--fg);color:var(--bg);padding:10px 18px;border-radius:12px;font-size:.9rem;opacity:0;pointer-events:none;transition:.25s;z-index:9}
+.toast.show{opacity:1;transform:translateX(-50%)}
+.marq{position:sticky;top:0;z-index:20;height:38px;overflow:hidden;background:#0b1f4b;color:#fff;display:flex;align-items:center;font-weight:700;font-size:.82rem;letter-spacing:.08em;text-transform:uppercase}.marq div{display:flex;white-space:nowrap;animation:mq 34s linear infinite;will-change:transform}.marq span{padding:0 30px}.marq span::after{content:"\2726";margin-left:60px;opacity:.7}@keyframes mq{to{transform:translateX(-50%)}}
+.topbrand{display:flex;align-items:center;gap:12px;margin-bottom:22px;padding-bottom:16px;border-bottom:1px solid var(--line)}.topbrand b{font-size:1.3rem;letter-spacing:.1em;font-weight:800}.topbrand .t{color:var(--muted);font-size:.84rem}
+.marq::after{content:"";position:absolute;left:0;right:0;bottom:0;height:4px;background:linear-gradient(90deg,#ff9933 33.3%,#fff 33.3% 66.6%,#138808 66.6%)}
+.logo{background:linear-gradient(180deg,#ff9933 33.3%,#fff 33.3% 66.6%,#138808 66.6%);color:#000080;border:1px solid var(--line)}
+.marq{background:linear-gradient(90deg,#ffc27a,#fff 50%,#9fd9b8);color:#1a2b5c}.hero{background:linear-gradient(160deg,#ffb066 0%,#ff9f45 28%,#6fc093 72%,#4fae7b 100%);color:#16211b;text-shadow:none}.hero .btn{border-color:rgba(22,33,27,.35);color:#16211b}.hero .btn.primary{background:#fff;color:#0f5b3e;border-color:#fff}.chakra{border-color:#5c7fd1;opacity:.4;background:repeating-conic-gradient(#5c7fd1 0 1.4deg,transparent 1.4deg 15deg)}.chakra::after{background:#5c7fd1}
+.triband{border-radius:16px;overflow:hidden;border:1px solid var(--line);padding:30px 26px;color:#16211b;background:linear-gradient(180deg,#ffbf80 0 26%,#fff 26% 74%,#8fd3ae 74%)}.triband .muted{color:#4a5a52}
+#mentorList{grid-template-columns:repeat(auto-fill,minmax(280px,1fr));grid-auto-rows:auto;align-content:start}.cards>.mcard{display:grid;grid-template-columns:52px 1fr;gap:6px 14px;align-items:center}.mcard .row{grid-column:1/-1;margin-top:6px}.av{width:52px;height:52px;border-radius:50%;display:grid;place-items:center;font-weight:800;color:#16211b;background:linear-gradient(135deg,#ffbf80,#8fd3ae)}
+
+
+@media(max-width:820px){.app{grid-template-columns:1fr}.side{position:sticky;height:auto;z-index:5;flex-direction:row;align-items:center;overflow-x:auto;padding:10px 12px;border-right:0;border-bottom:1px solid var(--line)}
+.brand,.dbbadge{display:none}.nav{flex-direction:row}.nav button{white-space:nowrap}.nav button span{display:none}.sidefoot{margin:0 0 0 auto}main{padding:20px 14px}.dash{grid-template-columns:1fr}.hero{padding:30px 22px}.hero h1{font-size:1.7rem}}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style></head>
+<body>
+<script>try{var t=localStorage.getItem('saral-theme');if(t)document.documentElement.dataset.theme=t}catch(e){}</script>
+<div class="marq" aria-label="SARAL, AYUSH Startup Portal. Licences, labs, funding, mentors."><div><span>SARAL · AYUSH Startup Portal</span><span>Licences · Labs · Funding · Mentors</span><span>Launch your AYUSH startup with confidence</span><span aria-hidden="true">SARAL · AYUSH Startup Portal</span><span aria-hidden="true">Licences · Labs · Funding · Mentors</span><span aria-hidden="true">Launch your AYUSH startup with confidence</span></div></div>
+<div class="app">
+<aside class="side">
+  <div class="brand"><div class="logo"><svg class="i" viewBox="0 0 24 24"><path d="M12 21c-5-2-8-6-8-11 5 0 8 2 8 6 0-4 3-6 8-6 0 5-3 9-8 11z"/></svg></div>SARAL</div>
+  <nav class="nav" aria-label="Main" id="nav"></nav>
+  <div class="sidefoot">
+    <div class="dbbadge" id="dbb"><i class="dot"></i><span>Connecting…</span></div>
+    <button class="btn sm" id="themeBtn" type="button">Theme</button>
+  </div>
+</aside>
+<div><main>
+<div class="topbrand"><div class="logo"><svg class="i" viewBox="0 0 24 24"><path d="M12 21c-5-2-8-6-8-11 5 0 8 2 8 6 0-4 3-6 8-6 0 5-3 9-8 11z"/></svg></div><div><b>SARAL</b><div class="t">AYUSH Startup Registration &amp; Accelerator Portal</div></div></div>
+
+<section data-screen="home" hidden>
+  <div class="hero"><div class="chakra" aria-hidden="true"></div><h1>Launch your AYUSH startup with confidence.</h1>
+    <p>Track licences, book testing labs, apply for funding and learn from mentors, all in one place.</p>
+    <div class="row"><button class="btn primary" data-go="profile" type="button">Create profile</button><button class="btn" data-go="dashboard" type="button">Open dashboard</button></div></div>
+  <div class="cards lift">
+    <article class="card"><h3>Documents</h3><p class="small muted">Upload, renew and track verification.</p></article>
+    <article class="card"><h3>Labs</h3><p class="small muted">Book clinical and herbal testing slots.</p></article>
+    <article class="card"><h3>Funding</h3><p class="small muted">Schemes matched to your stage.</p></article>
+  </div>
+</section>
+
+<section data-screen="profile" hidden>
+  <header><h1>Startup profile</h1><p class="muted">Saved to your account.</p></header>
+  <form class="card form" id="profForm">
+    <div class="grid2">
+      <label>Startup name<input name="name" required pattern=".*\S.*"></label>
+      <label>Domain<select name="domain" required><option value="">Choose</option><option>Ayurveda</option><option>Yoga &amp; Naturopathy</option><option>Unani</option><option>Siddha</option><option>Homoeopathy</option></select></label>
+      <label>Founder name<input name="founder" required></label>
+      <label>Email<input name="email" type="email" required></label>
+    </div>
+    <div class="row"><button class="btn primary" type="submit">Save profile</button></div>
+  </form>
+</section>
+
+<section data-screen="dashboard" hidden>
+  <header class="triband"><h1 id="dashTitle">Dashboard</h1><p class="muted" id="dashSub"></p></header>
+  <div class="dash">
+    <div class="card row" style="gap:24px"><div class="ring" id="ring"><b id="ringTxt">0%</b></div>
+      <div><h2 style="margin:0 0 4px">Compliance readiness</h2><p class="small muted">Share of documents verified.</p>
+      <p class="small" style="margin-top:10px"><span class="pill ok" id="stV"></span> <span class="pill warn" id="stP"></span> <span class="pill bad" id="stR"></span></p></div></div>
+    <div class="card"><span class="muted small">Next lab slot</span><div class="big" id="stNext">None</div><p class="small muted" id="stBk"></p></div>
+  </div>
+  <div class="card"><h2>Renewals</h2><ul class="list" id="renewals"></ul></div>
+</section>
+
+<section data-screen="documents" hidden>
+  <header><h1>Documents</h1><p class="muted" id="docCount"></p></header>
+  <div class="card"><div class="tw"><table><thead><tr><th>Document</th><th>Expiry</th><th>Status</th><th class="act"><span class="sr">Actions</span></th></tr></thead><tbody id="docRows"></tbody></table></div></div>
+  <div class="card"><h2 id="docFormTitle">Upload document</h2>
+    <form id="docForm" class="form"><div class="grid2">
+      <label>Type<select name="name" required><option>Drug manufacturing licence</option><option>GMP certificate</option><option>Patent certificate</option><option>Lab test report</option><option>Incorporation certificate</option></select></label>
+      <label>Expiry<input type="date" name="expiry"></label></div>
+      <label>File (PDF, JPG or PNG)<input type="file" name="file" accept=".pdf,.jpg,.jpeg,.png"></label>
+      <div class="row"><button class="btn primary" type="submit" id="docSubmit">Upload</button><button class="btn ghost" type="button" id="docCancel" hidden>Cancel</button></div></form></div>
+</section>
+
+<section data-screen="labs" hidden>
+  <header><h1>Labs</h1><p class="muted" id="bookCount"></p></header>
+  <div class="card"><div class="tw"><table class="slots"><caption class="sr">Lab slots on 24 October 2026</caption>
+    <thead><tr><th scope="col" rowspan="2">Lab</th><th scope="colgroup" colspan="2">Morning</th><th scope="colgroup" colspan="2">Afternoon</th></tr>
+    <tr><th>09:00</th><th>10:00</th><th>14:00</th><th>16:00</th></tr></thead><tbody id="slotBody"></tbody></table></div></div>
+</section>
+
+<section data-screen="funding" hidden>
+  <header><h1>Funding</h1><p class="muted">Schemes for your stage</p></header>
+  <div class="cards lift" id="schemes"></div>
+</section>
+
+<section data-screen="mentors" hidden>
+  <header><h1>Mentors</h1></header>
+  <div class="row"><input type="search" id="mQ" placeholder="Search mentors" aria-label="Search mentors" style="max-width:260px">
+    <select id="mD" aria-label="Domain" style="max-width:200px"><option value="">All domains</option><option>Ayurveda</option><option>Yoga &amp; Naturopathy</option><option>Unani</option><option>Siddha</option><option>Homoeopathy</option></select></div>
+  <div class="cards lift" id="mentorList"></div>
+</section>
+
+<section data-screen="review" hidden>
+  <header><h1>Review</h1><p class="muted" id="revCount"></p></header>
+  <div class="card"><div class="tw"><table><thead><tr><th>Document</th><th>Expiry</th><th class="act"><span class="sr">Decision</span></th></tr></thead><tbody id="revRows"></tbody></table></div></div>
+</section>
+
+<section data-screen="guide" hidden>
+  <header><h1>AI guide</h1><p class="muted">Ask about licences, labs, documents or funding.</p></header>
+  <div class="card"><div class="chat" id="chat" aria-live="polite"></div>
+    <form id="gForm" class="row"><input id="gIn" placeholder="Type a question" aria-label="Your question" style="flex:1;min-width:180px"><button class="btn primary" type="submit" id="gSend">Send</button></form>
+    <div class="chips" id="chips"><button class="btn sm" type="button" data-q="Which documents do I need for a manufacturing licence?">Licence documents</button><button class="btn sm" type="button" data-q="What if my lab cancels?">Lab cancelled</button><button class="btn sm" type="button" data-q="What if my document is rejected?">Rejected document</button></div></div>
+</section>
+
+</main></div>
+</div>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script>
+(function(){'use strict';
+const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
+const esc=v=>String(v==null?'':v).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const TODAY=new Date();TODAY.setHours(0,0,0,0);
+const TIMES=['09:00','10:00','14:00','16:00'],LABS=['Quantum Clinical Lab','Bhartiya Herbal Testing'];
+const SCHEMES=[{n:'Startup India Seed Fund',s:'Idea, Prototype',a:'Up to ₹50 lakh'},{n:'AYUSH Innovation Grant',s:'Prototype, Pilot',a:'Up to ₹25 lakh'},{n:'Clinical Validation Support',s:'Pilot, Revenue',a:'Lab fee subsidy'}];
+const MENTORS=[{n:'Dr. Meera Rao',d:'Ayurveda',f:'Regulatory approvals'},{n:'Prof. Arjun Iyer',d:'Unani',f:'Clinical validation'},{n:'Dr. Kavya Nair',d:'Siddha',f:'Product and IP'},{n:'Vikram Shah',d:'Homoeopathy',f:'Fundraising'}];
+const GUIDE=[{w:['licence','license'],a:'A manufacturing licence needs an incorporation certificate, a factory plan and GMP status. Add them under Documents.'},{w:['lab','cancel'],a:'If a lab cancels, book a free slot again from the Labs page.'},{w:['reject'],a:'Open Documents, choose Replace, and upload a clear copy. Review checks it next.'},{w:['fund','grant','seed'],a:'Funding lists schemes for your stage. Choose Apply on any scheme.'}];
+const NAV=[['home','Home','M3 11l9-8 9 8v9a1 1 0 01-1 1h-5v-6H9v6H4a1 1 0 01-1-1z'],['dashboard','Dashboard','M4 20V10M10 20V4M16 20v-7M22 20H2'],['documents','Documents','M7 3h8l4 4v14H7zM15 3v4h4'],['labs','Labs','M9 3h6M10 3v6l-5 9a2 2 0 002 3h10a2 2 0 002-3l-5-9V3'],['funding','Funding','M12 2v20M17 6H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6'],['mentors','Mentors','M16 11a4 4 0 10-8 0 4 4 0 008 0zM4 21a8 8 0 0116 0'],['review','Review','M5 13l4 4L19 7'],['guide','AI guide','M21 12a8 8 0 01-11.6 7.1L3 21l1.9-6.4A8 8 0 1121 12z']];
+$('#nav').innerHTML=NAV.map(n=>`<button type="button" data-go="${n[0]}"><svg class="i" viewBox="0 0 24 24"><path d="${n[2]}"/></svg><span>${n[1]}</span></button>`).join('');
+
+/* ---------- Data layer: per-user database, in-memory fallback ---------- */
+const mem={documents:[],bookings:[],applications:[],requests:[],profile:[]};let db=null,uid=null,seq=1;
+const col=n=>db.collection('data/users/'+uid+'/'+n+'/items');
+async function list(n){if(!db)return mem[n].map(x=>({...x}));const s=await col(n).get();return s.docs.map(d=>({id:d.id,...d.data()}))}
+async function put(n,id,data){if(!db){const i=mem[n].findIndex(x=>x.id===id);if(i<0)mem[n].push({id,...data});else Object.assign(mem[n][i],data);return}await col(n).doc(id).set(data)}
+async function add(n,data){const id='i'+Date.now().toString(36)+(seq++);await put(n,id,data);return id}
+async function upd(n,id,p){if(!db)return put(n,id,p);await col(n).doc(id).update(p)}
+async function del(n,id){if(!db){mem[n]=mem[n].filter(x=>x.id!==id);return}await col(n).doc(id).delete()}
+async function initDb(){
+  try{if(window.claude&&claude.use){const d=await claude.use('db'),u=await claude.use('user');const id=u?await u.id():null;if(d&&id){db=d;uid=id}}}catch(e){db=null}
+  const b=$('#dbb');b.classList.toggle('on',!!db);b.querySelector('span').textContent=db?'Saved to your account':'Demo mode · not saved';
+}
+
+/* ---------- Helpers ---------- */
+function toast(m){const t=$('#toast');t.textContent=m;t.classList.add('show');clearTimeout(toast.t);toast.t=setTimeout(()=>t.classList.remove('show'),2200)}
+const err=e=>toast(e&&e.message?e.message:'Something went wrong');
+const pill=(t,c)=>`<span class="pill ${c||''}">${esc(t)}</span>`;
+const days=d=>d?Math.round((new Date(d+'T00:00:00')-TODAY)/864e5):null;
+function expPill(d){const n=days(d.expiry);return n===null?'':n<0?pill('Expired','bad'):n<=30?pill(n+' days','warn'):pill(n+' days','ok')}
+const stPill=d=>pill(d.status,{Verified:'ok',Pending:'warn',Rejected:'bad'}[d.status]);
+function empty(msg,btn){return `<div class="empty">${msg}${btn?`<div style="margin-top:12px"><button class="btn sm primary" type="button" data-sample>Load sample data</button></div>`:''}</div>`}
+async function loadSample(){
+  const docs=[['Drug manufacturing licence','2027-03-31','Verified',''],['GMP certificate','2026-10-28','Verified',''],['Lab test report','2026-12-30','Pending',''],['Incorporation certificate','','Rejected','Unreadable scan'],['Patent certificate','','Pending','']];
+  for(const d of docs)await add('documents',{name:d[0],expiry:d[1],status:d[2],reason:d[3]});
+  await put('bookings','b01',{lab:LABS[0],time:'10:00'});toast('Sample data loaded');go(cur)}
+
+/* ---------- Theme ---------- */
+function eff(){const t=document.documentElement.dataset.theme;return t||(matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light')}
+function themeLabel(){$('#themeBtn').textContent=eff()==='dark'?'☀ Light mode':'☾ Dark mode'}
+$('#themeBtn').onclick=()=>{const n=eff()==='dark'?'light':'dark';document.documentElement.dataset.theme=n;try{localStorage.setItem('saral-theme',n)}catch(e){}themeLabel()};
+themeLabel();
+
+/* ---------- Navigation ---------- */
+let cur='home';const VIEWS={dashboard:rDash,documents:rDocs,labs:rLabs,funding:rFund,mentors:rMentors,review:rReview,guide:rGuide,profile:rProfile};
+function go(n){if(!$(`[data-screen="${n}"]`))n='home';cur=n;
+  $$('[data-screen]').forEach(s=>s.hidden=s.dataset.screen!==n);
+  $$('.nav [data-go]').forEach(b=>b.dataset.go===n?b.setAttribute('aria-current','page'):b.removeAttribute('aria-current'));
+  if(VIEWS[n])Promise.resolve().then(VIEWS[n]).catch(err);scrollTo(0,0)}
+document.addEventListener('click',e=>{const t=e.target.closest('[data-go]');if(t){e.preventDefault();go(t.dataset.go)}
+  if(e.target.closest('[data-sample]'))loadSample().catch(err)});
+
+/* ---------- Profile ---------- */
+async function getProfile(){return (await list('profile'))[0]||null}
+async function rProfile(){const p=await getProfile();if(p){const f=$('#profForm').elements;['name','domain','founder','email'].forEach(k=>f[k].value=p[k]||'')}}
+$('#profForm').addEventListener('submit',async e=>{e.preventDefault();const f=e.target;if(!f.checkValidity()){f.reportValidity();return}
+  try{await put('profile','main',{name:f.elements.name.value.trim(),domain:f.elements.domain.value,founder:f.elements.founder.value.trim(),email:f.elements.email.value});toast('Profile saved');go('dashboard')}catch(x){err(x)}});
+
+/* ---------- Dashboard ---------- */
+function count(el,to,suf){let n=0;const step=()=>{n+=Math.max(1,Math.ceil((to-n)/6));if(n>=to)n=to;el.textContent=n+suf;if(n<to)requestAnimationFrame(step)};step()}
+async function rDash(){
+  const [docs,bks,p]=await Promise.all([list('documents'),list('bookings'),getProfile()]);
+  $('#dashTitle').textContent=p?p.name:'Dashboard';$('#dashSub').textContent=p?p.founder+' · '+p.domain:'Create a profile to personalise this page.';
+  const v=docs.filter(d=>d.status==='Verified').length,pe=docs.filter(d=>d.status==='Pending').length,r=docs.filter(d=>d.status==='Rejected').length;
+  const pc=docs.length?Math.round(v/docs.length*100):0;$('#ring').style.setProperty('--p',pc);count($('#ringTxt'),pc,'%');
+  $('#stV').textContent=v+' verified';$('#stP').textContent=pe+' pending';$('#stR').textContent=r+' rejected';
+  $('#stNext').textContent=bks.length?bks[0].time:'None';$('#stBk').textContent=bks.length?bks[0].lab:'No slot booked';
+  const rn=docs.filter(d=>d.expiry).sort((a,b)=>a.expiry<b.expiry?-1:1);
+  $('#renewals').innerHTML=rn.length?rn.map(d=>`<li><span class="meta">${esc(d.name)}<br><span class="small muted">${esc(d.expiry)}</span></span>${expPill(d)}</li>`).join(''):`<li>${docs.length?'<span class="muted">No expiry dates yet</span>':empty('No documents yet.',1)}</li>`}
+
+/* ---------- Documents (CRUD) ---------- */
+let editing=null;
+async function rDocs(){const docs=await list('documents');$('#docCount').textContent=docs.length+' documents';
+  $('#docRows').innerHTML=docs.length?docs.map(d=>`<tr><td>${esc(d.name)}${d.reason?`<div class="small err">${esc(d.reason)}</div>`:''}</td><td>${esc(d.expiry||'—')}</td><td>${stPill(d)}</td><td class="act"><button class="btn sm ghost" type="button" data-edit="${esc(d.id)}">Replace</button> <button class="btn sm ghost danger" type="button" data-del="${esc(d.id)}">Delete</button></td></tr>`).join(''):`<tr><td colspan="4">${empty('No documents yet.',1)}</td></tr>`}
+function resetDoc(){editing=null;$('#docForm').reset();$('#docFormTitle').textContent='Upload document';$('#docSubmit').textContent='Upload';$('#docCancel').hidden=true}
+$('#docCancel').onclick=resetDoc;
+$('#docRows').addEventListener('click',async e=>{const ed=e.target.closest('[data-edit]'),dl=e.target.closest('[data-del]');
+  try{if(ed){const d=(await list('documents')).find(x=>x.id===ed.dataset.edit);if(!d)return;editing=d.id;const f=$('#docForm').elements;f.name.value=d.name;f.expiry.value=d.expiry||'';
+      $('#docFormTitle').textContent='Replace: '+d.name;$('#docSubmit').textContent='Save';$('#docCancel').hidden=false;f.name.scrollIntoView({block:'center'})}
+    if(dl){await del('documents',dl.dataset.del);if(editing===dl.dataset.del)resetDoc();toast('Deleted');rDocs()}}catch(x){err(x)}});
+$('#docForm').addEventListener('submit',async e=>{e.preventDefault();const f=e.target,x=f.elements.expiry.value,file=f.elements.file.files[0];
+  x&&new Date(x+'T00:00:00')<TODAY?f.elements.expiry.setCustomValidity('Expiry must be today or later'):f.elements.expiry.setCustomValidity('');
+  f.elements.file.setCustomValidity(!file&&editing===null?'Choose a file':file&&!/\.(pdf|jpe?g|png)$/i.test(file.name)?'Use a PDF, JPG or PNG file':'');
+  if(!f.checkValidity()){f.reportValidity();return}
+  try{const patch={expiry:x,status:'Pending',reason:''};
+    if(editing!==null){await upd('documents',editing,patch);toast('Saved. Pending review')}
+    else{const name=f.elements.name.value,ex=(await list('documents')).find(d=>d.name===name);
+      if(ex)await upd('documents',ex.id,patch);else await add('documents',{name,...patch});toast('Uploaded. Pending review')}
+    resetDoc();rDocs()}catch(z){err(z)}});
+
+/* ---------- Labs ---------- */
+async function rLabs(){const b=await list('bookings');$('#bookCount').textContent='24 Oct 2026 · '+b.length+' booked';
+  $('#slotBody').innerHTML=LABS.map((lab,li)=>`<tr><th scope="row">${esc(lab)}</th>`+TIMES.map((t,ti)=>{const id='b'+li+ti,hit=b.find(x=>x.id===id);
+    return `<td>${hit?`<button class="btn sm ghost danger" type="button" data-cancel="${id}">Cancel</button>`:`<button class="btn sm" type="button" data-book="${li}|${ti}">Book</button>`}</td>`}).join('')+'</tr>').join('')}
+$('#slotBody').addEventListener('click',async e=>{const bk=e.target.closest('[data-book]'),cn=e.target.closest('[data-cancel]');
+  try{if(bk){const[l,t]=bk.dataset.book.split('|');await put('bookings','b'+l+t,{lab:LABS[l],time:TIMES[t]});toast('Slot booked')}
+    if(cn){await del('bookings',cn.dataset.cancel);toast('Booking cancelled')}rLabs()}catch(x){err(x)}});
+
+/* ---------- Funding ---------- */
+async function rFund(){const a=(await list('applications')).map(x=>x.id);
+  $('#schemes').innerHTML=SCHEMES.map((s,i)=>{const done=a.includes('s'+i);return `<article class="card"><h3>${esc(s.n)}</h3><p class="small muted">${esc(s.s)}</p><strong>${esc(s.a)}</strong><div class="row"><button class="btn sm ${done?'':'primary'}" type="button" data-apply="${i}" ${done?'disabled':''}>${done?'Applied':'Apply'}</button></div></article>`}).join('')}
+$('#schemes').addEventListener('click',async e=>{const b=e.target.closest('[data-apply]');if(!b)return;
+  try{await put('applications','s'+b.dataset.apply,{scheme:SCHEMES[b.dataset.apply].n});toast('Application sent');rFund()}catch(x){err(x)}});
+
+/* ---------- Mentors ---------- */
+async function rMentors(){const q=$('#mQ').value.trim().toLowerCase(),dm=$('#mD').value,req=(await list('requests')).map(x=>x.id);
+  const rows=MENTORS.map((m,i)=>({m,i})).filter(({m})=>(!dm||m.d===dm)&&(!q||(m.n+' '+m.d+' '+m.f).toLowerCase().includes(q)));
+  $('#mentorList').innerHTML=rows.length?rows.map(({m,i})=>{const d=req.includes('m'+i);return `<article class="card mcard"><div class="av">${esc(m.n.replace(/^(Dr\.|Prof\.)\s*/,'').split(' ').map(w=>w[0]).join('').slice(0,2))}</div><div><h3>${esc(m.n)}</h3><p class="small muted">${esc(m.d)} · ${esc(m.f)}</p></div><div class="row"><button class="btn sm" type="button" data-req="${i}" ${d?'disabled':''}>${d?'Requested':'Request'}</button></div></article>`}).join(''):'<p class="muted">No mentors match</p>'}
+$('#mQ').oninput=()=>rMentors().catch(err);$('#mD').onchange=()=>rMentors().catch(err);
+$('#mentorList').addEventListener('click',async e=>{const b=e.target.closest('[data-req]');if(!b)return;
+  try{await put('requests','m'+b.dataset.req,{mentor:MENTORS[b.dataset.req].n});toast('Request sent');rMentors()}catch(x){err(x)}});
+
+/* ---------- Review ---------- */
+async function rReview(){const p=(await list('documents')).filter(d=>d.status==='Pending');$('#revCount').textContent=p.length+' pending';
+  $('#revRows').innerHTML=p.length?p.map(d=>`<tr><td>${esc(d.name)}</td><td>${esc(d.expiry||'—')}</td><td class="act"><button class="btn sm primary" type="button" data-ok="${esc(d.id)}">Approve</button> <button class="btn sm ghost danger" type="button" data-no="${esc(d.id)}">Reject</button></td></tr>`).join(''):'<tr><td colspan="3" class="muted">Nothing to review</td></tr>'}
+$('#revRows').addEventListener('click',async e=>{const ok=e.target.closest('[data-ok]'),no=e.target.closest('[data-no]');
+  try{if(ok){await upd('documents',ok.dataset.ok,{status:'Verified',reason:''});toast('Approved')}
+    if(no){await upd('documents',no.dataset.no,{status:'Rejected',reason:'Unreadable scan. Upload a clear copy.'});toast('Rejected')}rReview()}catch(x){err(x)}});
+
+/* ---------- AI guide (Claude when available, keywords otherwise) ---------- */
+function say(who,t){const p=document.createElement('p');p.className='msg'+(who==='me'?' me':'');p.textContent=t;$('#chat').appendChild(p);$('#chat').scrollTop=1e9;return p}
+const kw=q=>{const t=q.toLowerCase(),h=GUIDE.find(g=>g.w.some(w=>t.includes(w)));return h?h.a:'Try asking about licences, labs, documents or funding.'};
+async function ask(q){if(!q)return;say('me',q);const out=say('bot','…');$('#gSend').disabled=true;
+  try{const s=window.claude&&claude.use?await claude.use('sample'):null;
+    if(!s)throw 0;const r=await s('You are the help assistant for SARAL, an Indian AYUSH startup portal with pages Documents, Labs, Funding, Mentors and Review. Answer in under 70 words, plainly. Question: '+q,{cache:false});out.textContent=r.text}
+  catch(e){out.textContent=kw(q)}$('#gSend').disabled=false}
+async function rGuide(){if(!$('#chat').children.length)say('bot','Hi. What do you need help with?')}
+$('#gForm').addEventListener('submit',e=>{e.preventDefault();const i=$('#gIn');const q=i.value.trim();i.value='';ask(q)});
+$('#chips').addEventListener('click',e=>{const b=e.target.closest('[data-q]');if(b)ask(b.dataset.q)});
+
+go('home');initDb().then(()=>go(cur));
+})();
+</script>
+</body></html>

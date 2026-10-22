@@ -74,7 +74,7 @@ td.act,th.act{text-align:right;white-space:nowrap}.slots th[scope=row]{color:var
 <body>
 <script>try{var t=localStorage.getItem('saral-theme');if(t)document.documentElement.dataset.theme=t}catch(e){}</script>
 <div class="marq" aria-label="SARAL, AYUSH Startup Portal. Licences, labs, funding, mentors."><div><span>SARAL · AYUSH Startup Portal</span><span>Licences · Labs · Funding · Mentors</span><span>Launch your AYUSH startup with confidence</span><span aria-hidden="true">SARAL · AYUSH Startup Portal</span><span aria-hidden="true">Licences · Labs · Funding · Mentors</span><span aria-hidden="true">Launch your AYUSH startup with confidence</span></div></div>
-<section id="authGate" class="card" style="max-width:480px;margin:8vh auto;padding:28px"><h1>SARAL sign in</h1><p class="muted" style="margin:8px 0 18px">Sign in or create an account to securely save your portal data.</p><form id="authForm" class="form"><label>Email<input name="email" type="email" required></label><label>Password<input name="password" type="password" minlength="8" required></label><label>Action<select name="mode"><option value="signin">Sign in</option><option value="signup">Create account</option></select></label><button class="btn primary" type="submit">Continue</button></form><p id="authMessage" class="small" role="status" style="margin-top:12px"></p></section>
+<section id="authGate" class="card" style="max-width:480px;margin:8vh auto;padding:28px"><h1>SARAL account</h1><p class="muted" style="margin:8px 0 18px">Create an account or sign in to access the portal. Your account and portal data are secured by Supabase.</p><div class="row" style="margin-bottom:18px"><button class="btn primary" type="button" data-auth-mode="signin" aria-pressed="true">Log in</button><button class="btn" type="button" data-auth-mode="signup" aria-pressed="false">Create account</button></div><form id="authForm" class="form"><input name="mode" type="hidden" value="signin"><label>Email<input name="email" type="email" autocomplete="email" required></label><label>Password<input name="password" type="password" minlength="8" autocomplete="current-password" required></label><label id="pwConfirmWrap" hidden>Confirm password<input name="confirmPassword" type="password" minlength="8" autocomplete="new-password"></label><button id="authSubmit" class="btn primary" type="submit">Log in</button></form><p id="authMessage" class="small" role="status" style="margin-top:12px"></p></section>
 <div class="app" hidden>
 <aside class="side">
   <div class="brand"><div class="logo"><svg class="i" viewBox="0 0 24 24"><path d="M12 21c-5-2-8-6-8-11 5 0 8 2 8 6 0-4 3-6 8-6 0 5-3 9-8 11z"/></svg></div>SARAL</div>
@@ -188,7 +188,30 @@ let db=null,uid=null,seq=1;
 function authMessage(s,bad){const e=$('#authMessage');e.textContent=s;e.classList.toggle('err',!!bad)}
 function setSession(s){uid=s?.user?.id||null;$('#authGate').hidden=!!uid;$('.app').hidden=!uid;const b=$('#dbb');b.classList.toggle('on',!!uid);b.querySelector('span').textContent=uid?'Connected · saved to Supabase':'Sign in to save data';if(uid){authMessage('Signed in as '+s.user.email);go(cur)}}
 async function initDb(){try{db=window.supabase.createClient(SUPABASE_URL,SUPABASE_KEY);const {data:{session}}=await db.auth.getSession();setSession(session);db.auth.onAuthStateChange((_e,s)=>setSession(s))}catch(e){authMessage(e.message||'Could not connect.',true)}}
-$('#authForm').addEventListener('submit',async e=>{e.preventDefault();const f=e.currentTarget,btn=f.querySelector('[type=submit]');btn.disabled=true;try{const r=f.elements.mode.value==='signup'?await db.auth.signUp({email:f.elements.email.value,password:f.elements.password.value}):await db.auth.signInWithPassword({email:f.elements.email.value,password:f.elements.password.value});if(r.error)throw r.error;if(f.elements.mode.value==='signup'&&!r.data.session)authMessage('Check your email to confirm your account.');else authMessage('Signed in.')}catch(x){authMessage(x.message||'Sign in failed.',true)}finally{btn.disabled=false}});
+let authMode='signin';
+function chooseAuthMode(mode){
+  authMode=mode;const f=$('#authForm');f.elements.mode.value=mode;
+  $('#pwConfirmWrap').hidden=mode!=='signup';
+  f.elements.confirmPassword.required=mode==='signup';
+  f.elements.password.autocomplete=mode==='signup'?'new-password':'current-password';
+  $('#authSubmit').textContent=mode==='signup'?'Create account':'Log in';
+  $$('[data-auth-mode]').forEach(b=>{const active=b.dataset.authMode===mode;b.setAttribute('aria-pressed',String(active));b.classList.toggle('primary',active)});
+  authMessage('');
+}
+$$('[data-auth-mode]').forEach(b=>b.addEventListener('click',()=>chooseAuthMode(b.dataset.authMode)));
+$('#authForm').addEventListener('submit',async e=>{
+  e.preventDefault();const f=e.currentTarget,btn=$('#authSubmit');
+  const email=f.elements.email.value.trim().toLowerCase(),password=f.elements.password.value;
+  if(authMode==='signup'&&password!==f.elements.confirmPassword.value){authMessage('Passwords do not match.',true);f.elements.confirmPassword.focus();return}
+  btn.disabled=true;
+  try{
+    const r=authMode==='signup'?await db.auth.signUp({email,password}):await db.auth.signInWithPassword({email,password});
+    if(r.error)throw r.error;
+    if(authMode==='signup'&&!r.data.session)authMessage('Account created. Check your email to confirm, then log in.');
+    else authMessage('Signed in successfully.');
+  }catch(x){authMessage(x.message||'Authentication failed.',true)}
+  finally{btn.disabled=false}
+});
 $('#signOutBtn').addEventListener('click',async()=>{const {error}=await db.auth.signOut();if(error)authMessage(error.message,true)});
 async function list(n){const {data,error}=await db.from('portal_records').select('item_id,payload').eq('collection',n).order('updated_at');if(error)throw error;return(data||[]).map(r=>({id:r.item_id,...r.payload}))}
 async function put(n,id,payload){const {error}=await db.from('portal_records').upsert({user_id:uid,collection:n,item_id:id,payload,updated_at:new Date().toISOString()},{onConflict:'user_id,collection,item_id'});if(error)throw error}

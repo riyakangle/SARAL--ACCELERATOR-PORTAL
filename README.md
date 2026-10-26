@@ -1,21 +1,13 @@
 # SARAL AYUSH Startup Portal
 
-The portal is a single-page application with 12 in-app views.
+SARAL is a single-page portal with 12 in-app views.
 
-## Run with Express.js
+The original prototype stack is used:
 
-```bash
-npm install
-npm start
-```
+- HTML5
+- CSS3
+- Browser JavaScript
+- Supabase Authentication, database records, and document storage
+- Browser local storage for theme preference
 
-Then open http://localhost:3000.
-
-The Express server serves `saralayush.html` and exposes:
-
-- `GET /api/health`
-- `GET /api/modules`
-
-AngularJS is loaded in the portal through its browser CDN and powers the module map on the Home view.
-
-GitHub Pages can host the static HTML file, but it cannot run the Express server. Use a Node-compatible host for the Express version.
+Open `saralayush.html` directly in a browser for a static preview, or publish the repository with GitHub Pages.

@@ -9,7 +9,7 @@
 :root[data-theme="dark"]{--bg:#0e1512;--surface:#16201b;--s2:#1c2822;--fg:#ecefe9;--muted:#93a39a;--line:#26342d;--accent:#58c391;--a2:#eab25a;--afg:#08140e;--warn:#eab25a;--bad:#f08a78;--ok:#58c391;--shadow:0 8px 28px rgba(0,0,0,.35);color-scheme:dark}
 *{box-sizing:border-box}html{scroll-padding-top:env(safe-area-inset-top,0px)}html,body{margin:0;min-height:100%}
 body{background:var(--bg);color:var(--fg);font:15px/1.55 var(--sans);transition:background .3s,color .3s}
-button,input,select{font:inherit;color:inherit}:focus-visible{outline:2px solid var(--a2);outline-offset:2px}[hidden]{display:none!important}.ng-cloak{display:none!important}
+button,input,select{font:inherit;color:inherit}:focus-visible{outline:2px solid var(--a2);outline-offset:2px}[hidden]{display:none!important}
 h1{font-size:1.9rem;font-weight:800;letter-spacing:-.02em;margin:0}h2{font-size:1.05rem;font-weight:700;margin:0 0 14px}h3{font-size:1rem;font-weight:700;margin:0}p{margin:0}
 .muted{color:var(--muted)}.small{font-size:.84rem}.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
 .app{display:grid;grid-template-columns:232px minmax(0,1fr);min-height:calc(100vh - 38px)}
@@ -100,7 +100,6 @@ td.act,th.act{text-align:right;white-space:nowrap}.slots th[scope=row]{color:var
     <article class="card"><h3>Documents</h3><p class="small muted">Upload, renew and track verification.</p></article>
     <article class="card"><h3>Labs</h3><p class="small muted">Book clinical and herbal testing slots.</p></article>
     <article class="card"><h3>Funding</h3><p class="small muted">Schemes matched to your stage.</p></article>
-    <article class="card ng-cloak" id="angularModules" ng-controller="ModuleController"><h3>AngularJS module map</h3><p class="small muted">A live view powered by AngularJS, with data supplied by the Express API when available.</p><input type="search" ng-model="moduleQuery" placeholder="Filter modules" aria-label="Filter portal modules"><div class="chips"><span class="pill" ng-repeat="module in modules | filter:moduleQuery track by module.id">{{module.name}}</span></div></article>
   </div>
 </section>
 
@@ -188,11 +187,7 @@ td.act,th.act{text-align:right;white-space:nowrap}.slots th[scope=row]{color:var
 
 <section data-screen="notifications" hidden>
   <header><h1>Notifications</h1><p class="muted">Important updates for your startup workspace.</p></header>
-  <div class="card"><ul class="list">
-    <li><span class="meta"><strong>Document review reminder</strong><br><span class="small muted">Check any pending documents before your next submission.</span></span><span class="pill warn">Action needed</span></li>
-    <li><span class="meta"><strong>Laboratory slots available</strong><br><span class="small muted">New testing windows are available in the Labs section.</span></span><span class="pill ok">New</span></li>
-    <li><span class="meta"><strong>Funding discovery</strong><br><span class="small muted">Review schemes that match your startup stage.</span></span><span class="pill">Info</span></li>
-  </ul></div>
+  <div class="card"><ul class="list" id="notificationList"></ul></div>
 </section>
 
 <section data-screen="settings" hidden>
@@ -209,7 +204,6 @@ td.act,th.act{text-align:right;white-space:nowrap}.slots th[scope=row]{color:var
 <button class="chat-fab" id="chatFab" type="button" aria-label="Open AI guide" title="Open AI guide"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3a8.5 8.5 0 0 0-7.3 12.9L3.5 21l5.2-1.2A8.5 8.5 0 1 0 12 3z"/><path d="M8 10h.01M12 10h.01M16 10h.01"/></svg></button>
 
 
-<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
 (function(){'use strict';
@@ -364,9 +358,19 @@ async function rApplication(){
   $('#appLab').textContent=bks.length?bks[0].time:'None';
   $('#appStatus').textContent=docs.length?docs.filter(d=>d.status==='Pending').length+' document(s) still need review.':'Add your first documents to begin tracking.';
 }
-function rNotifications(){}
+async function rNotifications(){
+  const [docs,bks]=await Promise.all([list('documents'),list('bookings')]);
+  const messages=[];
+  const pending=docs.filter(d=>d.status==='Pending').length;
+  const rejected=docs.filter(d=>d.status==='Rejected').length;
+  if(pending)messages.push({title:'Document review reminder',detail:pending+' document(s) are waiting for review.',label:'Action needed',cls:'warn'});
+  if(rejected)messages.push({title:'Document replacement needed',detail:rejected+' document(s) were rejected. Replace the affected files.',label:'Action needed',cls:'bad'});
+  if(!bks.length)messages.push({title:'Book a laboratory slot',detail:'Choose a testing window from the Labs section.',label:'New',cls:'ok'});
+  else messages.push({title:'Laboratory booking saved',detail:bks.length+' booking(s) are currently recorded.',label:'Confirmed',cls:'ok'});
+  messages.push({title:'Funding discovery',detail:'Review schemes that match your startup stage.',label:'Info',cls:''});
+  $('#notificationList').innerHTML=messages.map(n=>'<li><span class="meta"><strong>'+esc(n.title)+'</strong><br><span class="small muted">'+esc(n.detail)+'</span></span>'+pill(n.label,n.cls)+'</li>').join('');
+}
 function rSettings(){
-  const p=getProfile();
   $('#settingsTheme').onclick=()=>$('#themeBtn').click();
   $('#settingsSignOut').onclick=()=>$('#signOutBtn').click();
   list('profile').then(rows=>{const a=rows[0];$('#settingsEmail').textContent=a&&a.email?'Signed-in profile: '+a.email:'No profile email saved.'}).catch(err);
@@ -386,24 +390,5 @@ $('#chips').addEventListener('click',e=>{const b=e.target.closest('[data-q]');if
 go('home');initDb().then(()=>go(cur));
 })();
 </script>
-<script>
-(function(){
-  if(!window.angular)return;
-  angular.module('saralAngular',[])
-    .controller('ModuleController',['$scope','$http',function($scope,$http){
-      $scope.modules=[
-        {id:'profile',name:'Profile'},
-        {id:'documents',name:'Documents'},
-        {id:'labs',name:'Labs'},
-        {id:'funding',name:'Funding'},
-        {id:'mentors',name:'Mentors'},
-        {id:'review',name:'Review'}
-      ];
-      $http.get('/api/modules').then(function(response){
-        if(Array.isArray(response.data))$scope.modules=response.data;
-      }).catch(angular.noop);
-    }]);
-  angular.bootstrap(document.getElementById('angularModules'),['saralAngular']);
-})();
-</script>
+
 </body></html>

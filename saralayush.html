@@ -169,6 +169,39 @@ td.act,th.act{text-align:right;white-space:nowrap}.slots th[scope=row]{color:var
     <div class="chips" id="chips"><button class="btn sm" type="button" data-q="Which documents do I need for a manufacturing licence?">Licence documents</button><button class="btn sm" type="button" data-q="What if my lab cancels?">Lab cancelled</button><button class="btn sm" type="button" data-q="What if my document is rejected?">Rejected document</button></div></div>
 </section>
 
+
+<section data-screen="application" hidden>
+  <header><h1>Application tracking</h1><p class="muted">Follow your startup journey from profile creation to review.</p></header>
+  <div class="cards">
+    <article class="card"><span class="muted small">Profile</span><div class="big" id="appProfile">Not started</div><p class="small muted">Startup information</p></article>
+    <article class="card"><span class="muted small">Documents</span><div class="big" id="appDocs">0</div><p class="small muted">Records submitted</p></article>
+    <article class="card"><span class="muted small">Laboratory</span><div class="big" id="appLab">None</div><p class="small muted">Next booked slot</p></article>
+  </div>
+  <div class="card"><h2>Application journey</h2><ol class="list">
+    <li><span class="meta"><strong>1. Create profile</strong><br><span class="small muted">Add your startup and founder details.</span></span>${pill('Complete','ok')}</li>
+    <li><span class="meta"><strong>2. Submit documents</strong><br><span class="small muted">Upload licences and supporting records.</span></span>${pill('In progress','warn')}</li>
+    <li><span class="meta"><strong>3. Complete review</strong><br><span class="small muted">A reviewer verifies pending documents.</span></span>${pill('Pending','warn')}</li>
+    <li><span class="meta"><strong>4. Official decision</strong><br><span class="small muted">Final approvals remain with the relevant authority.</span></span>${pill('Authority','')}</li>
+  </ol><p class="small muted" id="appStatus" style="margin-top:14px"></p></div>
+</section>
+
+<section data-screen="notifications" hidden>
+  <header><h1>Notifications</h1><p class="muted">Important updates for your startup workspace.</p></header>
+  <div class="card"><ul class="list">
+    <li><span class="meta"><strong>Document review reminder</strong><br><span class="small muted">Check any pending documents before your next submission.</span></span>${pill('Action needed','warn')}</li>
+    <li><span class="meta"><strong>Laboratory slots available</strong><br><span class="small muted">New testing windows are available in the Labs section.</span></span>${pill('New','ok')}</li>
+    <li><span class="meta"><strong>Funding discovery</strong><br><span class="small muted">Review schemes that match your startup stage.</span></span>${pill('Info','')}</li>
+  </ul></div>
+</section>
+
+<section data-screen="settings" hidden>
+  <header><h1>Settings and account</h1><p class="muted">Manage your display preferences and account session.</p></header>
+  <div class="grid2">
+    <div class="card"><h2>Appearance</h2><p class="small muted">Switch between light and dark mode for the portal.</p><button class="btn primary" id="settingsTheme" type="button">Change theme</button></div>
+    <div class="card"><h2>Account</h2><p class="small muted">Your signed-in account is used for profiles, documents, bookings and applications.</p><p class="small" id="settingsEmail">Account details load after sign in.</p><button class="btn" id="settingsSignOut" type="button">Sign out</button></div>
+  </div>
+  <div class="card"><h2>Data and privacy</h2><p class="small muted">Portal records are stored in your connected Supabase account. Uploaded files use the portal document storage bucket.</p></div>
+</section>
 </main></div>
 </div>
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
@@ -185,7 +218,7 @@ const TIMES=['09:00','10:00','14:00','16:00'],LABS=['Quantum Clinical Lab','Bhar
 const SCHEMES=[{n:'Startup India Seed Fund',s:'Idea, Prototype',a:'Up to ₹50 lakh'},{n:'AYUSH Innovation Grant',s:'Prototype, Pilot',a:'Up to ₹25 lakh'},{n:'Clinical Validation Support',s:'Pilot, Revenue',a:'Lab fee subsidy'}];
 const MENTORS=[{n:'Dr. Meera Rao',d:'Ayurveda',f:'Regulatory approvals'},{n:'Prof. Arjun Iyer',d:'Unani',f:'Clinical validation'},{n:'Dr. Kavya Nair',d:'Siddha',f:'Product and IP'},{n:'Vikram Shah',d:'Homoeopathy',f:'Fundraising'}];
 const GUIDE=[{w:['licence','license'],a:'A manufacturing licence needs an incorporation certificate, a factory plan and GMP status. Add them under Documents.'},{w:['lab','cancel'],a:'If a lab cancels, book a free slot again from the Labs page.'},{w:['reject'],a:'Open Documents, choose Replace, and upload a clear copy. Review checks it next.'},{w:['fund','grant','seed'],a:'Funding lists schemes for your stage. Choose Apply on any scheme.'}];
-const NAV=[['home','Home','M3 11l9-8 9 8v9a1 1 0 01-1 1h-5v-6H9v6H4a1 1 0 01-1-1z'],['dashboard','Dashboard','M4 20V10M10 20V4M16 20v-7M22 20H2'],['documents','Documents','M7 3h8l4 4v14H7zM15 3v4h4'],['labs','Labs','M9 3h6M10 3v6l-5 9a2 2 0 002 3h10a2 2 0 002-3l-5-9V3'],['funding','Funding','M12 2v20M17 6H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6'],['mentors','Mentors','M16 11a4 4 0 10-8 0 4 4 0 008 0zM4 21a8 8 0 0116 0'],['review','Review','M5 13l4 4L19 7'],['guide','AI guide','M21 12a8 8 0 01-11.6 7.1L3 21l1.9-6.4A8 8 0 1121 12z']];
+const NAV=[['home','Home','M3 11l9-8 9 8v9a1 1 0 01-1 1h-5v-6H9v6H4a1 1 0 01-1-1z'],['dashboard','Dashboard','M4 20V10M10 20V4M16 20v-7M22 20H2'],['documents','Documents','M7 3h8l4 4v14H7zM15 3v4h4'],['labs','Labs','M9 3h6M10 3v6l-5 9a2 2 0 002 3h10a2 2 0 002-3l-5-9V3'],['funding','Funding','M12 2v20M17 6H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6'],['mentors','Mentors','M16 11a4 4 0 10-8 0 4 4 0 008 0zM4 21a8 8 0 0116 0'],['review','Review','M5 13l4 4L19 7'],['guide','AI guide','M21 12a8 8 0 01-11.6 7.1L3 21l1.9-6.4A8 8 0 1121 12z'],['application','Applications','M4 4h16v16H4zM8 8h8M8 12h8M8 16h5'],['notifications','Notifications','M18 8a6 6 0 00-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9M10 21h4'],['settings','Settings','M12 15.5a3.5 3.5 0 100-7 3.5 3.5 0 000 7zM19.4 15a1.7 1.7 0 000 2.4l.1.1-1.8 1.8-.1-.1a1.7 1.7 0 00-2.4 0 1.7 1.7 0 00-.5 1.2v.2h-2.6v-.2a1.7 1.7 0 00-3.4 0v.2H6.2v-.2a1.7 1.7 0 00-.5-1.2 1.7 1.7 0 00-2.4 0l-.1.1-1.8-1.8.1-.1a1.7 1.7 0 000-2.4 1.7 1.7 0 00-1.2-.5H.1v-2.6h.2a1.7 1.7 0 000-3.4H.1V6.2h.2a1.7 1.7 0 001.2-.5 1.7 1.7 0 000-2.4l-.1-.1 1.8-1.8.1.1a1.7 1.7 0 002.4 0 1.7 1.7 0 00.5-1.2V.1h2.6v.2a1.7 1.7 0 003.4 0v-.2h2.6v.2a1.7 1.7 0 00.5 1.2 1.7 1.7 0 002.4 0l.1-.1 1.8 1.8-.1.1a1.7 1.7 0 000 2.4 1.7 1.7 0 001.2.5h.2v2.6h-.2a1.7 1.7 0 000 3.4h.2v2.6h-.2a1.7 1.7 0 00-1.2.5z']];
 $('#nav').innerHTML=NAV.map(n=>`<button type="button" data-go="${n[0]}"><svg class="i" viewBox="0 0 24 24"><path d="${n[2]}"/></svg><span>${n[1]}</span></button>`).join('');
 
 /* Supabase persistence */
@@ -245,7 +278,7 @@ $('#themeBtn').onclick=()=>{const n=eff()==='dark'?'light':'dark';document.docum
 themeLabel();
 
 /* ---------- Navigation ---------- */
-let cur='home';const VIEWS={dashboard:rDash,documents:rDocs,labs:rLabs,funding:rFund,mentors:rMentors,review:rReview,guide:rGuide,profile:rProfile};
+let cur='home';const VIEWS={dashboard:rDash,documents:rDocs,labs:rLabs,funding:rFund,mentors:rMentors,review:rReview,guide:rGuide,profile:rProfile,application:rApplication,notifications:rNotifications,settings:rSettings};
 function go(n){if(!$(`[data-screen="${n}"]`))n='home';cur=n;
   $$('[data-screen]').forEach(s=>s.hidden=s.dataset.screen!==n);
   $$('.nav [data-go]').forEach(b=>b.dataset.go===n?b.setAttribute('aria-current','page'):b.removeAttribute('aria-current'));
@@ -320,6 +353,22 @@ async function rReview(){const p=(await list('documents')).filter(d=>d.status===
 $('#revRows').addEventListener('click',async e=>{const ok=e.target.closest('[data-ok]'),no=e.target.closest('[data-no]');
   try{if(ok){await upd('documents',ok.dataset.ok,{status:'Verified',reason:''});toast('Approved')}
     if(no){await upd('documents',no.dataset.no,{status:'Rejected',reason:'Unreadable scan. Upload a clear copy.'});toast('Rejected')}rReview()}catch(x){err(x)}});
+
+/* ---------- Application, notifications and settings ---------- */
+async function rApplication(){
+  const [docs,bks,p]=await Promise.all([list('documents'),list('bookings'),getProfile()]);
+  $('#appProfile').textContent=p?'Complete':'Not started';
+  $('#appDocs').textContent=docs.length;
+  $('#appLab').textContent=bks.length?bks[0].time:'None';
+  $('#appStatus').textContent=docs.length?docs.filter(d=>d.status==='Pending').length+' document(s) still need review.':'Add your first documents to begin tracking.';
+}
+function rNotifications(){}
+function rSettings(){
+  const p=getProfile();
+  $('#settingsTheme').onclick=()=>$('#themeBtn').click();
+  $('#settingsSignOut').onclick=()=>$('#signOutBtn').click();
+  list('profile').then(rows=>{const a=rows[0];$('#settingsEmail').textContent=a&&a.email?'Signed-in profile: '+a.email:'No profile email saved.'}).catch(err);
+}
 
 /* ---------- AI guide (Claude when available, keywords otherwise) ---------- */
 function say(who,t){const p=document.createElement('p');p.className='msg'+(who==='me'?' me':'');p.textContent=t;$('#chat').appendChild(p);$('#chat').scrollTop=1e9;return p}

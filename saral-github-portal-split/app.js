@@ -23,6 +23,68 @@ const localRead=(key,fallback)=>{try{return JSON.parse(storeGet(key)||JSON.strin
 const localWrite=(key,value)=>storeSet(key,JSON.stringify(value));
 const localUid=email=>'local-'+encodeURIComponent(email).replace(/%/g,'_');
 const localRecords=n=>`saral-local-records:${uid}:${n}`;
+const HI={
+  'SARAL · AYUSH Startup Portal':'सरल · आयुष स्टार्टअप पोर्टल','Licences · Labs · Funding · Mentors':'लाइसेंस · प्रयोगशालाएँ · वित्तपोषण · मार्गदर्शक','Launch your AYUSH startup with confidence':'आत्मविश्वास के साथ अपना आयुष स्टार्टअप शुरू करें','SARAL · AYUSH Startup Portal':'सरल · आयुष स्टार्टअप पोर्टल','SARAL · Profile':'सरल · प्रोफ़ाइल','SARAL · Dashboard':'सरल · डैशबोर्ड','SARAL · Documents':'सरल · दस्तावेज़','SARAL · Labs':'सरल · प्रयोगशालाएँ','SARAL · Funding':'सरल · वित्तपोषण','SARAL · Mentors':'सरल · मार्गदर्शक','SARAL · Review':'सरल · समीक्षा','SARAL · AI Guide':'सरल · एआई मार्गदर्शिका','SARAL · Applications':'सरल · आवेदन','SARAL · Notifications':'सरल · सूचनाएँ','SARAL · Settings':'सरल · सेटिंग्स',
+  'SARAL account':'सरल खाता','Log in':'लॉग इन करें','Create account':'खाता बनाएँ','Email':'ईमेल','Password':'पासवर्ड','Confirm password':'पासवर्ड की पुष्टि करें','Home':'होम','Profile':'प्रोफ़ाइल','Dashboard':'डैशबोर्ड','Documents':'दस्तावेज़','Labs':'प्रयोगशालाएँ','Funding':'वित्तपोषण','Mentors':'मार्गदर्शक','Review':'समीक्षा','AI guide':'एआई मार्गदर्शिका','Applications':'आवेदन','Notifications':'सूचनाएँ','Settings':'सेटिंग्स','Sign out':'लॉग आउट','Theme':'थीम','AYUSH Startup Registration & Accelerator Portal':'आयुष स्टार्टअप पंजीकरण एवं एक्सेलरेटर पोर्टल',
+  'Launch your AYUSH startup with confidence.':'आत्मविश्वास के साथ अपना आयुष स्टार्टअप शुरू करें।','Track licences, book testing labs, apply for funding and learn from mentors, all in one place.':'लाइसेंस की स्थिति देखें, परीक्षण प्रयोगशालाएँ बुक करें, वित्तपोषण के लिए आवेदन करें और मार्गदर्शकों से सीखें—सब कुछ एक ही जगह।','Create profile':'प्रोफ़ाइल बनाएँ','Open dashboard':'डैशबोर्ड खोलें','Upload, renew and track verification.':'दस्तावेज़ अपलोड करें, नवीनीकरण करें और सत्यापन देखें।','Book clinical and herbal testing slots.':'क्लिनिकल और हर्बल परीक्षण का समय बुक करें।','Schemes matched to your stage.':'आपके चरण के अनुरूप योजनाएँ।',
+  'Startup profile':'स्टार्टअप प्रोफ़ाइल','Saved to your account.':'आपके खाते में सहेजा गया।','Startup name':'स्टार्टअप का नाम','Domain':'क्षेत्र','Choose':'चुनें','Ayurveda':'आयुर्वेद','Yoga & Naturopathy':'योग एवं प्राकृतिक चिकित्सा','Unani':'यूनानी','Siddha':'सिद्ध','Homoeopathy':'होम्योपैथी','Founder name':'संस्थापक का नाम','Save profile':'प्रोफ़ाइल सहेजें',
+  'Compliance readiness':'अनुपालन की तैयारी','Share of documents verified.':'सत्यापित दस्तावेज़ों का अनुपात।','Next lab slot':'अगली प्रयोगशाला बुकिंग','Renewals':'नवीनीकरण','Expiry':'समाप्ति तिथि','Status':'स्थिति','Actions':'कार्रवाई','Upload document':'दस्तावेज़ अपलोड करें','Type':'प्रकार','Drug manufacturing licence':'औषधि निर्माण लाइसेंस','GMP certificate':'जीएमपी प्रमाणपत्र','Patent certificate':'पेटेंट प्रमाणपत्र','Lab test report':'प्रयोगशाला परीक्षण रिपोर्ट','Incorporation certificate':'निगमन प्रमाणपत्र','File (PDF, JPG or PNG)':'फ़ाइल (PDF, JPG या PNG)','Upload':'अपलोड करें','Cancel':'रद्द करें','Lab slots on 24 October 2026':'24 अक्टूबर 2026 की प्रयोगशाला बुकिंग','Lab':'प्रयोगशाला','Morning':'सुबह','Afternoon':'दोपहर','Schemes for your stage':'आपके चरण के लिए योजनाएँ',
+  'Search mentors':'मार्गदर्शक खोजें','All domains':'सभी क्षेत्र','Document':'दस्तावेज़','Decision':'निर्णय','Ask about licences, labs, documents or funding.':'लाइसेंस, प्रयोगशालाओं, दस्तावेज़ों या वित्तपोषण के बारे में पूछें।','Type a question':'अपना प्रश्न लिखें','Your question':'आपका प्रश्न','Send':'भेजें','Licence documents':'लाइसेंस के दस्तावेज़','Lab cancelled':'प्रयोगशाला बुकिंग रद्द हुई','Rejected document':'अस्वीकृत दस्तावेज़',
+  'Application tracking':'आवेदन की स्थिति','Follow your startup journey from profile creation to review.':'प्रोफ़ाइल बनाने से समीक्षा तक अपने स्टार्टअप की प्रगति देखें।','Not started':'शुरू नहीं हुआ','Startup information':'स्टार्टअप की जानकारी','Records submitted':'जमा किए गए रिकॉर्ड','Laboratory':'प्रयोगशाला','Next booked slot':'अगली बुकिंग','Application journey':'आवेदन की प्रक्रिया','1. Create profile':'1. प्रोफ़ाइल बनाएँ','Add your startup and founder details.':'अपने स्टार्टअप और संस्थापक का विवरण जोड़ें।','Complete':'पूरा','2. Submit documents':'2. दस्तावेज़ जमा करें','Upload licences and supporting records.':'लाइसेंस और सहायक दस्तावेज़ अपलोड करें।','In progress':'जारी है','3. Complete review':'3. समीक्षा पूरी करें','A reviewer verifies pending documents.':'समीक्षक लंबित दस्तावेज़ों का सत्यापन करता है।','Pending':'लंबित','4. Official decision':'4. आधिकारिक निर्णय','Final approvals remain with the relevant authority.':'अंतिम स्वीकृति संबंधित प्राधिकरण द्वारा दी जाएगी।','Authority':'प्राधिकरण',
+  'Important updates for your startup workspace.':'आपके स्टार्टअप कार्यक्षेत्र के महत्वपूर्ण अपडेट।','Settings and account':'सेटिंग्स और खाता','Manage your display preferences and account session.':'दिखावट की प्राथमिकताएँ और खाता सत्र प्रबंधित करें।','Appearance':'दिखावट','Switch between light and dark mode for the portal.':'पोर्टल के लाइट और डार्क मोड में बदलें।','Change theme':'थीम बदलें','Language':'भाषा','Choose the language used throughout the portal.':'पूरे पोर्टल के लिए भाषा चुनें।','Portal language':'पोर्टल की भाषा','English':'अंग्रेज़ी','हिन्दी':'हिन्दी','Your signed-in account is used for profiles, documents, bookings and applications.':'आपका साइन-इन खाता प्रोफ़ाइल, दस्तावेज़, बुकिंग और आवेदनों के लिए उपयोग होता है।','Account details load after sign in.':'साइन इन करने के बाद खाते का विवरण दिखेगा।','Data and privacy':'डेटा और गोपनीयता','Portal records are stored in your connected Supabase account. Uploaded files use the portal document storage bucket.':'पोर्टल के रिकॉर्ड आपके जुड़े हुए Supabase खाते में सहेजे जाते हैं। अपलोड की गई फ़ाइलें पोर्टल के दस्तावेज़ भंडारण में रखी जाती हैं।',
+  'Connected · saved to Supabase':'जुड़ा हुआ · Supabase में सहेजा गया','Local demo · saved in browser':'स्थानीय डेमो · ब्राउज़र में सहेजा गया','Sign in to save data':'डेटा सहेजने के लिए साइन इन करें','Connecting…':'कनेक्ट हो रहा है…','Supabase is unavailable here. Local browser mode is ready.':'यहाँ Supabase उपलब्ध नहीं है। स्थानीय ब्राउज़र मोड तैयार है।','Signed in successfully.':'सफलतापूर्वक साइन इन हुआ।','Passwords do not match.':'पासवर्ड मेल नहीं खाते।','Account created. Check your email to confirm, then log in.':'खाता बन गया। पुष्टि के लिए ईमेल देखें, फिर लॉग इन करें।','Authentication failed.':'प्रमाणीकरण विफल हुआ।','Something went wrong':'कुछ गड़बड़ हुई।','Light mode':'लाइट मोड','Dark mode':'डार्क मोड','An account with this email already exists.':'इस ईमेल से खाता पहले से मौजूद है।','Invalid local email or password. Create an account first.':'स्थानीय ईमेल या पासवर्ड गलत है। पहले खाता बनाएँ।','No mentors match':'कोई मार्गदर्शक मेल नहीं खाता','Startup India Seed Fund':'स्टार्टअप इंडिया सीड फंड','AYUSH Innovation Grant':'आयुष नवाचार अनुदान','Clinical Validation Support':'क्लिनिकल सत्यापन सहायता','Idea, Prototype':'विचार, प्रोटोटाइप','Prototype, Pilot':'प्रोटोटाइप, पायलट','Pilot, Revenue':'पायलट, राजस्व','Up to ₹50 lakh':'₹50 लाख तक','Up to ₹25 lakh':'₹25 लाख तक','Lab fee subsidy':'प्रयोगशाला शुल्क में सहायता','Regulatory approvals':'नियामकीय स्वीकृतियाँ','Clinical validation':'क्लिनिकल सत्यापन','Product and IP':'उत्पाद और बौद्धिक संपदा','Fundraising':'निधि जुटाना','Document review reminder':'दस्तावेज़ समीक्षा अनुस्मारक','Document replacement needed':'दस्तावेज़ बदलना आवश्यक','Book a laboratory slot':'प्रयोगशाला का समय बुक करें','Laboratory booking saved':'प्रयोगशाला बुकिंग सहेजी गई','Funding discovery':'वित्तपोषण योजनाएँ देखें','Action needed':'कार्रवाई आवश्यक','Confirmed':'पुष्टि हुई','New':'नई','Info':'जानकारी','None':'कोई नहीं','Dashboard':'डैशबोर्ड',
+  'verified':'सत्यापित','rejected':'अस्वीकृत','No slot booked':'कोई बुकिंग नहीं','No expiry dates yet':'अभी कोई समाप्ति तिथि नहीं','No documents yet.':'अभी कोई दस्तावेज़ नहीं।','No mentors match':'कोई मार्गदर्शक मेल नहीं खाता','Replace':'बदलें','Delete':'हटाएँ','Save':'सहेजें','Saved. Pending review':'सहेजा गया। समीक्षा लंबित है','Uploaded. Pending review':'अपलोड हुआ। समीक्षा लंबित है','Deleted':'हटा दिया गया','Choose a file':'फ़ाइल चुनें','Use a PDF, JPG or PNG file':'PDF, JPG या PNG फ़ाइल चुनें','Expiry must be today or later':'समाप्ति तिथि आज या उसके बाद की होनी चाहिए','Sample data loaded':'नमूना डेटा लोड हुआ','Slot booked':'समय बुक हुआ','Booking cancelled':'बुकिंग रद्द हुई','Applied':'आवेदन किया गया','Apply':'आवेदन करें','Application sent':'आवेदन भेजा गया','Requested':'अनुरोध भेजा गया','Request':'अनुरोध करें','Request sent':'अनुरोध भेजा गया','Approve':'स्वीकृत करें','Reject':'अस्वीकृत करें','Approved':'स्वीकृत','Rejected':'अस्वीकृत','Nothing to review':'समीक्षा के लिए कुछ नहीं है','Profile saved':'प्रोफ़ाइल सहेजी गई','Complete':'पूरा','No profile email saved.':'प्रोफ़ाइल ईमेल सहेजा नहीं गया है।','Signed-in profile:':'साइन-इन प्रोफ़ाइल:','Open AI guide':'एआई मार्गदर्शिका खोलें','Hi. What do you need help with?':'नमस्ते। आपको किस बारे में सहायता चाहिए?','Try asking about licences, labs, documents or funding.':'लाइसेंस, प्रयोगशालाओं, दस्तावेज़ों या वित्तपोषण के बारे में पूछें।',
+  'A manufacturing licence needs an incorporation certificate, a factory plan and GMP status. Add them under Documents.':'निर्माण लाइसेंस के लिए निगमन प्रमाणपत्र, फैक्टरी योजना और जीएमपी स्थिति चाहिए। इन्हें दस्तावेज़ अनुभाग में जोड़ें।','If a lab cancels, book a free slot again from the Labs page.':'यदि प्रयोगशाला बुकिंग रद्द हो जाए, तो प्रयोगशाला पृष्ठ से दूसरा उपलब्ध समय बुक करें।','Open Documents, choose Replace, and upload a clear copy. Review checks it next.':'दस्तावेज़ खोलें, बदलें चुनें और स्पष्ट प्रति अपलोड करें। फिर उसकी समीक्षा होगी।','Funding lists schemes for your stage. Choose Apply on any scheme.':'वित्तपोषण पृष्ठ पर आपके चरण के अनुरूप योजनाएँ हैं। किसी योजना पर आवेदन करें।'
+};
+let currentLanguage='en';
+let originalTitle='';
+const originalTextNodes=new WeakMap(),originalAttributes=new WeakMap();
+function translatePhrase(value){
+  if(currentLanguage!=='hi')return value;
+  if(HI[value])return HI[value];
+  let m=value.match(/^(\d+) documents$/);if(m)return `${m[1]} दस्तावेज़`;
+  m=value.match(/^(\d+) verified$/);if(m)return `${m[1]} सत्यापित`;
+  m=value.match(/^(\d+) pending$/);if(m)return `${m[1]} लंबित`;
+  m=value.match(/^(\d+) rejected$/);if(m)return `${m[1]} अस्वीकृत`;
+  m=value.match(/^(\d+) booked$/);if(m)return `${m[1]} बुकिंग`;
+  m=value.match(/^24 Oct 2026 · (\d+) booked$/);if(m)return `24 अक्टूबर 2026 · ${m[1]} बुकिंग`;
+  m=value.match(/^(\d+) document\(s\) are waiting for review\.$/);if(m)return `${m[1]} दस्तावेज़ समीक्षा की प्रतीक्षा में हैं।`;
+  m=value.match(/^(\d+) document\(s\) were rejected\. Replace the affected files\.$/);if(m)return `${m[1]} दस्तावेज़ अस्वीकृत हुए। संबंधित फ़ाइलें बदलें।`;
+  m=value.match(/^(\d+) document\(s\) still need review\.$/);if(m)return `${m[1]} दस्तावेज़ों की समीक्षा अभी बाकी है।`;
+  m=value.match(/^Signed in as (.+)$/);if(m)return `साइन इन किया है: ${m[1]}`;
+  return value;
+}
+function translatePage(root=document.body){
+  const walker=document.createTreeWalker(root,NodeFilter.SHOW_TEXT,{acceptNode:n=>n.parentElement?.closest('script,style')?NodeFilter.FILTER_REJECT:NodeFilter.FILTER_ACCEPT});
+  let node;
+  while((node=walker.nextNode())){
+    if(!originalTextNodes.has(node))originalTextNodes.set(node,node.data);
+    const source=originalTextNodes.get(node),trimmed=source.trim();if(!trimmed)continue;
+    const translated=translatePhrase(trimmed);if(translated!==trimmed)node.data=source.replace(trimmed,translated);else if(currentLanguage==='en'&&node.data!==source)node.data=source;
+  }
+  const elements=root.nodeType===Node.ELEMENT_NODE?[root,...root.querySelectorAll('*')]:[...root.parentElement?.querySelectorAll('*')||[]];
+  for(const el of elements){
+    for(const attr of ['placeholder','aria-label','title']){
+      if(!el.hasAttribute?.(attr))continue;
+      let saved=originalAttributes.get(el);if(!saved){saved={};originalAttributes.set(el,saved)}
+      if(!(attr in saved))saved[attr]=el.getAttribute(attr);
+      const original=saved[attr],translated=translatePhrase(original);if(el.getAttribute(attr)!==translated)el.setAttribute(attr,translated);
+    }
+  }
+}
+function setLanguage(language){
+  currentLanguage=language==='hi'?'hi':'en';storeSet('saral-language',currentLanguage);
+  document.documentElement.lang=currentLanguage==='hi'?'hi':'en';document.title=translatePhrase(originalTitle);translatePage();
+  const picker=$('#languageSelect');if(picker&&picker.value!==currentLanguage)picker.value=currentLanguage;
+  themeLabel();
+}
+function initLanguage(){
+  currentLanguage=storeGet('saral-language')==='hi'?'hi':'en';
+  originalTitle=document.title;document.documentElement.lang=currentLanguage==='hi'?'hi':'en';document.title=translatePhrase(originalTitle);
+  const picker=$('#languageSelect');if(picker){picker.value=currentLanguage;picker.addEventListener('change',()=>setLanguage(picker.value))}
+  translatePage();
+  new MutationObserver(records=>records.forEach(r=>r.addedNodes.forEach(n=>{if(n.nodeType===Node.ELEMENT_NODE)translatePage(n);else if(n.nodeType===Node.TEXT_NODE)translatePage(n.parentElement||document.body)}))).observe(document.body,{childList:true,subtree:true});
+}
 async function localHash(value){
   if(window.crypto?.subtle){const bytes=await crypto.subtle.digest('SHA-256',new TextEncoder().encode(value));return [...new Uint8Array(bytes)].map(x=>x.toString(16).padStart(2,'0')).join('')}
   return btoa(unescape(encodeURIComponent(value)));
@@ -94,7 +156,7 @@ async function loadSample(){
 
 /* ---------- Theme ---------- */
 function eff(){const t=document.documentElement.dataset.theme;return t||(matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light')}
-function themeLabel(){$('#themeBtn').textContent=eff()==='dark'?'☀ Light mode':'☾ Dark mode'}
+function themeLabel(){$('#themeBtn').textContent=currentLanguage==='hi'?(eff()==='dark'?'☀ लाइट मोड':'☾ डार्क मोड'):(eff()==='dark'?'☀ Light mode':'☾ Dark mode')}
 $('#themeBtn').onclick=()=>{const n=eff()==='dark'?'light':'dark';document.documentElement.dataset.theme=n;try{localStorage.setItem('saral-theme',n)}catch(e){}themeLabel()};
 themeLabel();
 
@@ -202,7 +264,7 @@ function say(who,t){const p=document.createElement('p');p.className='msg'+(who==
 const kw=q=>{const t=q.toLowerCase(),h=GUIDE.find(g=>g.w.some(w=>t.includes(w)));return h?h.a:'Try asking about licences, labs, documents or funding.'};
 async function ask(q){if(!q)return;say('me',q);const out=say('bot','…');$('#gSend').disabled=true;
   try{const s=window.claude&&claude.use?await claude.use('sample'):null;
-    if(!s)throw 0;const r=await s('You are the help assistant for SARAL, an Indian AYUSH startup portal with pages Documents, Labs, Funding, Mentors and Review. Answer in under 70 words, plainly. Question: '+q,{cache:false});out.textContent=r.text}
+    if(!s)throw 0;const answerLanguage=currentLanguage==='hi'?'Hindi':'English';const r=await s('You are the help assistant for SARAL, an Indian AYUSH startup portal with pages Documents, Labs, Funding, Mentors and Review. Answer in '+answerLanguage+' in under 70 words, plainly. Question: '+q,{cache:false});out.textContent=r.text}
   catch(e){out.textContent=kw(q)}$('#gSend').disabled=false}
 async function rGuide(){if(!$('#chat').children.length)say('bot','Hi. What do you need help with?')}
 if($('#gForm'))$('#gForm').addEventListener('submit',e=>{e.preventDefault();const i=$('#gIn');const q=i.value.trim();i.value='';ask(q)});
@@ -210,5 +272,6 @@ if($('#chips'))$('#chips').addEventListener('click',e=>{const b=e.target.closest
 
 async function initPage(){try{if(page==='profile.html')await rProfile();else if(page==='dashboard.html')await rDash();else if(page==='documents.html')await rDocs();else if(page==='labs.html')await rLabs();else if(page==='funding.html')await rFund();else if(page==='mentors.html')await rMentors();else if(page==='review.html')await rReview();else if(page==='guide.html')await rGuide();else if(page==='application.html')await rApplication();else if(page==='notifications.html')await rNotifications();else if(page==='settings.html')rSettings()}catch(e){err(e)}}
 
+initLanguage();
 initDb();
 })();

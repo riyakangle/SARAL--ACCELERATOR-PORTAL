@@ -33,3 +33,5 @@ This is the GitHub portal from the original `saralayush.html`, separated into 12
 For VS Code, open this folder, right-click `index.html`, then select **Open with Live Server**.
 
 The portal uses the same Supabase project settings included in the original `saralayush.html` source. It connects to Supabase whenever the CDN and browser storage are available; if they are unavailable, it falls back to browser-only demo mode so the pages remain usable during preview.
+
+Use Settings → Language to switch the interface between English and Hindi. The choice is saved in the browser and applies across the portal pages.
